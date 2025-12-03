@@ -155,6 +155,110 @@ npm run build
 npm run preview
 ```
 
+## 🚢 Deployment (Firebase Hosting)
+
+This app is configured for deployment to **Firebase Hosting** on Google Cloud Platform, which integrates seamlessly with Google services and offers a generous free tier.
+
+### Prerequisites
+
+- Firebase CLI installed: `npm install -g firebase-tools`
+- Firebase account ([Sign up here](https://firebase.google.com/))
+- Google Gemini API key
+
+### Deployment Steps
+
+1. **Login to Firebase**
+   ```bash
+   firebase login
+   ```
+
+2. **Initialize Firebase Hosting** (if not already done)
+   ```bash
+   firebase init hosting
+   ```
+   - Select an existing Firebase project or create a new one
+   - Set public directory to `dist`
+   - Configure as single-page app: **Yes**
+   - Don't overwrite `index.html`: **No** (Vite generates it)
+
+3. **Set up production environment variables**
+   
+   Create a `.env.production` file in the root directory:
+   ```env
+   GEMINI_API_KEY=your_api_key_here
+   ```
+   
+   ⚠️ **Important**: Never commit `.env.production` to version control. It's already in `.gitignore`.
+
+4. **Build the application**
+   ```bash
+   npm run build
+   ```
+   This creates the `dist/` directory with optimized production files.
+
+5. **Deploy to Firebase**
+   ```bash
+   firebase deploy --only hosting
+   ```
+
+6. **Access your deployed app**
+   
+   After deployment, Firebase will provide a URL like:
+   ```
+   https://your-project-id.web.app
+   ```
+   
+   Share this URL with school administrators to access the application.
+
+### Firebase Configuration
+
+The `firebase.json` file is pre-configured with:
+- ✅ **COEP/COOP headers** required for FFmpeg.wasm SharedArrayBuffer support
+- ✅ **SPA routing** for React Router compatibility
+- ✅ **FFmpeg.wasm file headers** for proper CORS and content types
+
+### Cost
+
+**Firebase Hosting Free Tier (Spark Plan):**
+- $0/month
+- 10GB storage
+- 360MB/day bandwidth (10GB/month)
+- Perfect for 1-10 users with moderate usage
+
+**Additional Costs:**
+- Google Gemini API: Pay-per-use (varies by usage)
+- Custom domain: ~$10-15/year (optional)
+
+### Automatic Deployment (Optional)
+
+To set up automatic deployment on every push to `main`:
+
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Select your project → Hosting → Connect GitHub
+3. Follow the setup wizard to connect your repository
+4. Configure build settings:
+   - Build command: `npm run build`
+   - Output directory: `dist`
+   - Environment variables: Add `GEMINI_API_KEY`
+
+### Custom Domain (Optional)
+
+1. In Firebase Console → Hosting → Add custom domain
+2. Follow DNS configuration instructions
+3. SSL certificate is automatically provisioned by Firebase
+
+### Troubleshooting
+
+**FFmpeg.wasm not loading:**
+- Ensure `public/ffmpeg/` files are present (they're gitignored but needed for deployment)
+- Check browser console for COEP/COOP errors
+- Verify Firebase headers are correctly set in `firebase.json`
+
+**API Key issues:**
+- Ensure `.env.production` exists with `GEMINI_API_KEY`
+- Rebuild after changing environment variables: `npm run build`
+- Check that the API key is valid and has sufficient quota
+
 ## 📖 Usage Guide
 
 1. **Upload a Video**

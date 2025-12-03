@@ -16,6 +16,7 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+.env.production
 
 # Editor directories and files
 .vscode/*
@@ -30,6 +31,9 @@ dist-ssr
 
 # FFmpeg files (large binary files)
 public/ffmpeg/
+
+# Firebase
+.firebase/
 
 # Test files
 test_video.mp4
