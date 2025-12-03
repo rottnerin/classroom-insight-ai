@@ -1,0 +1,5 @@
+{
+  "name": "Classroom Insight AI",
+  "description": "A multimodal analysis tool for teachers to evaluate lesson dynamics, talk time ratios, and question-answer patterns using Gemini 2.5 Flash.",
+  "requestFramePermissions": []
+}
