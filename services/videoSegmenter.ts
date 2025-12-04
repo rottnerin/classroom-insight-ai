@@ -240,7 +240,12 @@ export const segmentVideo = async (
 
     // Read the output file
     const outputData = await ff.readFile(outputFileName);
-    const blob = new Blob([outputData], { type: file.type || 'video/mp4' });
+    // Convert to Uint8Array with ArrayBuffer backing (Blob doesn't accept SharedArrayBuffer)
+    // FileData can be Uint8Array or string, but for binary video data it should be Uint8Array
+    const dataArray = outputData instanceof Uint8Array 
+      ? new Uint8Array(outputData) // Copy to new ArrayBuffer to avoid SharedArrayBuffer issues
+      : new Uint8Array(0); // Fallback (shouldn't happen for binary video data)
+    const blob = new Blob([dataArray], { type: file.type || 'video/mp4' });
     const segmentFile = new File([blob], `${file.name}_segment_${i}.mp4`, { 
       type: file.type || 'video/mp4' 
     });

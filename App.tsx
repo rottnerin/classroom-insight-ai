@@ -150,15 +150,15 @@ const App: React.FC = () => {
                        state.status === AnalysisStatus.ANALYZING;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', color: '#0f172a', paddingBottom: '5rem' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', color: '#0a0a0a', paddingBottom: '5rem' }}>
       {/* Header */}
       <header style={{
         position: 'sticky',
         top: 0,
         zIndex: 50,
         backgroundColor: '#ffffff',
-        borderBottom: '1px solid #e2e8f0',
-        boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        borderBottom: '1px solid #e5e5e5',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
       }}>
         <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
@@ -170,8 +170,9 @@ const App: React.FC = () => {
                 <Layout size={20} />
               </div>
               <h1 style={{ 
-                fontSize: '1.25rem', 
-                fontWeight: 700, 
+                fontSize: '1.5rem', 
+                fontWeight: 800, 
+                letterSpacing: '-0.03em',
                 background: 'linear-gradient(to right, #1d4ed8, #4338ca)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -187,14 +188,15 @@ const App: React.FC = () => {
                 style={{
                   fontSize: '0.875rem',
                   fontWeight: 500,
-                  color: '#64748b',
+                  color: '#404040',
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
                   padding: 0,
+                  transition: 'color 200ms ease-in-out',
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.color = '#2563eb'}
-                onMouseLeave={(e) => e.currentTarget.style.color = '#64748b'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#404040'}
                >
                  Analyze Another Video
                </button>
@@ -215,52 +217,94 @@ const App: React.FC = () => {
             minHeight: '60vh',
             gap: '2rem',
           }}>
-            <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '42rem' }}>
+            <div style={{ 
+              textAlign: 'center', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '1.5rem', 
+              maxWidth: '42rem',
+              animation: 'fadeInUp 0.4s ease-out'
+            }}>
               <h2 style={{ 
-                fontSize: '2.25rem', 
-                fontWeight: 800, 
-                letterSpacing: '-0.025em', 
-                color: '#0f172a',
+                fontSize: '2.5rem', 
+                fontWeight: 900, 
+                letterSpacing: '-0.05em', 
+                color: '#0a0a0a',
                 lineHeight: '1.1',
                 margin: 0
               }}>
                 Analyze teaching dynamics <br/>
                 <span style={{ color: '#2563eb' }}>in seconds.</span>
               </h2>
-              <p style={{ fontSize: '1.125rem', color: '#475569', margin: 0 }}>
+              <p style={{ fontSize: '1.125rem', color: '#404040', margin: 0 }}>
                 Upload a classroom video to automatically generate insights on Talk Time, Question Wait Time, and Bloom's Taxonomy distribution.
               </p>
             </div>
             <FileUpload onFileSelect={handleFileSelect} />
             
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-              gap: '1.5rem',
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '2rem',
               width: '100%',
               maxWidth: '56rem',
-              marginTop: '3rem',
+              marginTop: '4rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
             }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '1rem' }}>
-                <div style={{ backgroundColor: '#ffffff', padding: '0.75rem', borderRadius: '50%', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)', marginBottom: '0.75rem' }}>
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                textAlign: 'center', 
+                padding: '1.5rem',
+                transition: 'transform 200ms ease-in-out',
+                animation: 'fadeInUp 0.4s ease-out 0.1s both'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <div style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '50%', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)', marginBottom: '1rem' }}>
                   <Sparkles style={{ width: '1.5rem', height: '1.5rem', color: '#a855f7' }} />
                 </div>
-                <h3 style={{ fontWeight: 600, margin: '0 0 0.25rem 0' }}>AI Transcription</h3>
-                <p style={{ fontSize: '0.875rem', color: '#64748b', margin: 0 }}>Detects every question and response.</p>
+                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', margin: '0 0 0.5rem 0', color: '#0a0a0a' }}>AI Transcription</h3>
+                <p style={{ fontSize: '0.875rem', color: '#404040', margin: 0 }}>Detects every question and response.</p>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '1rem' }}>
-                <div style={{ backgroundColor: '#ffffff', padding: '0.75rem', borderRadius: '50%', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)', marginBottom: '0.75rem' }}>
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                textAlign: 'center', 
+                padding: '1.5rem',
+                transition: 'transform 200ms ease-in-out',
+                animation: 'fadeInUp 0.4s ease-out 0.15s both'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <div style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '50%', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)', marginBottom: '1rem' }}>
                   <PlaySquare style={{ width: '1.5rem', height: '1.5rem', color: '#3b82f6' }} />
                 </div>
-                <h3 style={{ fontWeight: 600, margin: '0 0 0.25rem 0' }}>Multimodal Analysis</h3>
-                <p style={{ fontSize: '0.875rem', color: '#64748b', margin: 0 }}>Watches video & listens to audio simultaneously.</p>
+                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', margin: '0 0 0.5rem 0', color: '#0a0a0a' }}>Multimodal Analysis</h3>
+                <p style={{ fontSize: '0.875rem', color: '#404040', margin: 0 }}>Watches video & listens to audio simultaneously.</p>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '1rem' }}>
-                <div style={{ backgroundColor: '#ffffff', padding: '0.75rem', borderRadius: '50%', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)', marginBottom: '0.75rem' }}>
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                textAlign: 'center', 
+                padding: '1.5rem',
+                transition: 'transform 200ms ease-in-out',
+                animation: 'fadeInUp 0.4s ease-out 0.2s both'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <div style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '50%', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)', marginBottom: '1rem' }}>
                   <Layout style={{ width: '1.5rem', height: '1.5rem', color: '#22c55e' }} />
                 </div>
-                <h3 style={{ fontWeight: 600, margin: '0 0 0.25rem 0' }}>Actionable Data</h3>
-                <p style={{ fontSize: '0.875rem', color: '#64748b', margin: 0 }}>Visual charts for talk ratios and wait times.</p>
+                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', margin: '0 0 0.5rem 0', color: '#0a0a0a' }}>Actionable Data</h3>
+                <p style={{ fontSize: '0.875rem', color: '#404040', margin: 0 }}>Visual charts for talk ratios and wait times.</p>
               </div>
             </div>
           </div>
@@ -274,6 +318,7 @@ const App: React.FC = () => {
             justifyContent: 'center',
             minHeight: '60vh',
             gap: '1.5rem',
+            animation: 'fadeIn 0.4s ease-out'
           }}>
             <div style={{ position: 'relative' }}>
               <div style={{
@@ -305,10 +350,10 @@ const App: React.FC = () => {
               </div>
             </div>
             <div style={{ textAlign: 'center', maxWidth: '28rem' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1e293b', margin: '0 0 0.5rem 0' }}>
+              <h3 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#0a0a0a', margin: '0 0 0.5rem 0' }}>
                 {phaseDisplay.title}
               </h3>
-              <p style={{ color: '#64748b', margin: 0 }}>
+              <p style={{ fontSize: '1rem', color: '#404040', margin: 0 }}>
                 {phaseDisplay.subtitle}
               </p>
               
@@ -320,11 +365,11 @@ const App: React.FC = () => {
                   
                   {state.progress.phase === 'segmenting' && state.progress.percent !== undefined && (
                     <div style={{ width: '16rem', margin: '0 auto' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748b', marginBottom: '0.25rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#404040', marginBottom: '0.25rem' }}>
                         <span>Progress</span>
                         <span>{state.progress.percent}%</span>
                       </div>
-                      <div style={{ height: '0.5rem', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                      <div style={{ height: '0.5rem', backgroundColor: '#e5e5e5', borderRadius: '9999px', overflow: 'hidden' }}>
                         <div 
                           style={{ 
                             height: '100%', 
@@ -340,11 +385,11 @@ const App: React.FC = () => {
                   
                   {state.progress.phase !== 'segmenting' && state.progress.totalSegments > 1 && (
                     <div style={{ width: '16rem', margin: '0 auto' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748b', marginBottom: '0.25rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#404040', marginBottom: '0.25rem' }}>
                         <span>Segments</span>
                         <span>{state.progress.currentSegment} / {state.progress.totalSegments}</span>
                       </div>
-                      <div style={{ height: '0.5rem', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                      <div style={{ height: '0.5rem', backgroundColor: '#e5e5e5', borderRadius: '9999px', overflow: 'hidden' }}>
                         <div 
                           style={{ 
                             height: '100%', 
@@ -377,23 +422,24 @@ const App: React.FC = () => {
               <AlertTriangle style={{ width: '3rem', height: '3rem', color: '#ef4444' }} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.5rem 0' }}>Analysis Failed</h3>
-              <p style={{ color: '#475569', margin: 0, maxWidth: '28rem' }}>{state.error}</p>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#0a0a0a', margin: '0 0 0.5rem 0' }}>Analysis Failed</h3>
+              <p style={{ fontSize: '1rem', color: '#404040', margin: 0, maxWidth: '28rem' }}>{state.error}</p>
             </div>
             <button 
               onClick={reset}
               style={{
                 padding: '0.5rem 1.5rem',
-                backgroundColor: '#0f172a',
+                backgroundColor: '#0a0a0a',
                 color: '#ffffff',
                 borderRadius: '0.5rem',
                 border: 'none',
                 cursor: 'pointer',
                 fontSize: '0.875rem',
                 fontWeight: 500,
+                transition: 'background-color 200ms ease-in-out',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1e293b'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0f172a'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0a0a0a'}
             >
               Try Again
             </button>
@@ -409,6 +455,34 @@ const App: React.FC = () => {
       <style>{`
         @keyframes spin {
           to { transform: rotate(360deg); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(1rem);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
         }
       `}</style>
     </div>

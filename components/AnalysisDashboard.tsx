@@ -29,18 +29,30 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
     timestamp: pair.timestamp
   }));
 
+  // Calculate estimated cost for Gemini 2.0 Flash
+  // Pricing: Input $0.10 per million tokens, Output $0.40 per million tokens
+  const calculateEstimatedCost = (tokenUsage: typeof data.tokenUsage): number => {
+    if (!tokenUsage) return 0;
+    const inputCost = (tokenUsage.promptTokens / 1_000_000) * 0.10;
+    const outputCost = (tokenUsage.completionTokens / 1_000_000) * 0.40;
+    return inputCost + outputCost;
+  };
+
+  const estimatedCost = data.tokenUsage ? calculateEstimatedCost(data.tokenUsage) : 0;
+
   // Style definitions
   const dashboardContainerStyle: React.CSSProperties = {
     width: '100%',
     maxWidth: '80rem',
     margin: '0 auto',
     padding: '2rem 1rem',
+    animation: 'fadeIn 0.4s ease-out',
   };
 
   const tabContainerStyle: React.CSSProperties = {
     display: 'flex',
     gap: '0.5rem',
-    borderBottom: '2px solid #e2e8f0',
+    borderBottom: '2px solid #e5e5e5',
     marginBottom: '2rem',
   };
 
@@ -51,12 +63,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
     padding: '0.75rem 1.5rem',
     border: 'none',
     backgroundColor: 'transparent',
-    color: isActive ? '#2563eb' : '#64748b',
+    color: isActive ? '#2563eb' : '#404040',
     borderBottom: isActive ? '2px solid #2563eb' : '2px solid transparent',
     cursor: 'pointer',
     fontSize: '0.875rem',
-    fontWeight: isActive ? 600 : 500,
-    transition: 'all 0.2s',
+    fontWeight: isActive ? 700 : 500,
+    transition: 'all 200ms ease-in-out',
     marginBottom: '-2px',
   });
 
@@ -75,12 +87,13 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
   const summaryCardStyle: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
-    gap: '1rem',
-    padding: '1.5rem',
+    gap: '1.5rem',
+    padding: '2rem',
     backgroundColor: '#ffffff',
     borderRadius: '0.75rem',
-    boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1)',
-    border: '1px solid #e2e8f0',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e5e5e5',
+    transition: 'transform 200ms ease-in-out, box-shadow 200ms ease-in-out',
   };
 
   const getSummaryIconStyle = (color: 'blue' | 'green' | 'amber'): React.CSSProperties => {
@@ -102,15 +115,17 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
 
   const summaryLabelStyle: React.CSSProperties = {
     fontSize: '0.875rem',
-    color: '#64748b',
+    color: '#404040',
     margin: 0,
-    marginBottom: '0.25rem',
+    marginBottom: '0.5rem',
+    fontWeight: 500,
   };
 
   const summaryValueStyle: React.CSSProperties = {
-    fontSize: '1.5rem',
-    fontWeight: 700,
-    color: '#1e293b',
+    fontSize: '2.5rem',
+    fontWeight: 900,
+    letterSpacing: '-0.03em',
+    color: '#0a0a0a',
     margin: 0,
   };
 
@@ -121,27 +136,29 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
   };
 
   const chartCardStyle: React.CSSProperties = {
-    padding: '1.5rem',
+    padding: '2rem',
     backgroundColor: '#ffffff',
     borderRadius: '0.75rem',
-    boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1)',
-    border: '1px solid #e2e8f0',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e5e5e5',
+    transition: 'transform 200ms ease-in-out, box-shadow 200ms ease-in-out',
   };
 
   const chartTitleStyle: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     gap: '0.5rem',
-    fontSize: '1.125rem',
-    fontWeight: 600,
-    color: '#1e293b',
-    marginBottom: '1rem',
+    fontSize: '1.5rem',
+    fontWeight: 800,
+    letterSpacing: '-0.03em',
+    color: '#0a0a0a',
+    marginBottom: '1.5rem',
   };
 
   const chartIconStyle: React.CSSProperties = {
     width: '1.25rem',
     height: '1.25rem',
-    color: '#64748b',
+    color: '#404040',
   };
 
   const chartContainerStyle: React.CSSProperties = {
@@ -150,45 +167,48 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
   };
 
   const feedbackCardStyle: React.CSSProperties = {
-    padding: '1.5rem',
-    backgroundColor: '#f8fafc',
+    padding: '2rem',
+    backgroundColor: '#fafafa',
     borderRadius: '0.75rem',
-    border: '1px solid #e2e8f0',
+    border: '1px solid #e5e5e5',
   };
 
   const feedbackTitleStyle: React.CSSProperties = {
-    fontSize: '1.125rem',
-    fontWeight: 600,
-    color: '#1e293b',
-    marginBottom: '0.75rem',
+    fontSize: '1.5rem',
+    fontWeight: 800,
+    letterSpacing: '-0.03em',
+    color: '#0a0a0a',
+    marginBottom: '1rem',
   };
 
   const feedbackTextStyle: React.CSSProperties = {
-    color: '#475569',
+    color: '#404040',
     lineHeight: '1.75',
     margin: 0,
+    fontSize: '1rem',
   };
 
   const interactionTableContainerStyle: React.CSSProperties = {
     backgroundColor: '#ffffff',
     borderRadius: '0.75rem',
-    boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1)',
-    border: '1px solid #e2e8f0',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e5e5e5',
     overflow: 'hidden',
   };
 
   const interactionTableHeaderStyle: React.CSSProperties = {
-    padding: '1.5rem',
-    borderBottom: '1px solid #e2e8f0',
+    padding: '2rem',
+    borderBottom: '1px solid #e5e5e5',
   };
 
   const interactionTableTitleStyle: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     gap: '0.5rem',
-    fontSize: '1.125rem',
-    fontWeight: 600,
-    color: '#1e293b',
+    fontSize: '1.5rem',
+    fontWeight: 800,
+    letterSpacing: '-0.03em',
+    color: '#0a0a0a',
     margin: 0,
   };
 
@@ -198,19 +218,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
   };
 
   const tableHeaderStyle: React.CSSProperties = {
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fafafa',
     padding: '0.75rem 1rem',
     textAlign: 'left',
     fontSize: '0.875rem',
     fontWeight: 600,
-    color: '#475569',
-    borderBottom: '1px solid #e2e8f0',
+    color: '#404040',
+    borderBottom: '1px solid #e5e5e5',
   };
 
   const tableCellStyle: React.CSSProperties = {
     padding: '0.75rem 1rem',
     fontSize: '0.875rem',
-    borderBottom: '1px solid #e2e8f0',
+    borderBottom: '1px solid #e5e5e5',
+    transition: 'background-color 200ms ease-in-out',
   };
 
   const badgeStyle: React.CSSProperties = {
@@ -370,7 +391,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
         <div style={insightsContainerStyle}>
           {/* Summary Cards */}
           <div style={summaryGridStyle}>
-            <div style={summaryCardStyle}>
+            <div 
+              style={{
+                ...summaryCardStyle,
+                animation: 'fadeInUp 0.4s ease-out 0.1s both'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 2px 4px 0 rgba(0, 0, 0, 0.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.05)';
+              }}
+            >
               <div style={getSummaryIconStyle('blue')}>
                 <Mic size={24} />
               </div>
@@ -379,7 +413,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
                 <p style={summaryValueStyle}>{data.teacherTalkTimePercentage.toFixed(1)}%</p>
               </div>
             </div>
-            <div style={summaryCardStyle}>
+            <div 
+              style={{
+                ...summaryCardStyle,
+                animation: 'fadeInUp 0.4s ease-out 0.15s both'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 2px 4px 0 rgba(0, 0, 0, 0.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.05)';
+              }}
+            >
               <div style={getSummaryIconStyle('green')}>
                 <Users size={24} />
               </div>
@@ -388,7 +435,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
                 <p style={summaryValueStyle}>{data.studentTalkTimePercentage.toFixed(1)}%</p>
               </div>
             </div>
-            <div style={summaryCardStyle}>
+            <div 
+              style={{
+                ...summaryCardStyle,
+                animation: 'fadeInUp 0.4s ease-out 0.2s both'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 2px 4px 0 rgba(0, 0, 0, 0.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.05)';
+              }}
+            >
               <div style={getSummaryIconStyle('amber')}>
                 <Clock size={24} />
               </div>
@@ -402,7 +462,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
           {/* Main Charts Area */}
           <div style={chartsGridStyle}>
             {/* Talk Time Distribution */}
-            <div style={chartCardStyle}>
+            <div 
+              style={{
+                ...chartCardStyle,
+                animation: 'fadeInUp 0.4s ease-out 0.25s both'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 2px 4px 0 rgba(0, 0, 0, 0.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.05)';
+              }}
+            >
               <h3 style={chartTitleStyle}>
                 <BarChart2 style={chartIconStyle} />
                 Talk Time Distribution
@@ -434,7 +507,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
             </div>
 
             {/* Wait Time Analysis */}
-            <div style={chartCardStyle}>
+            <div 
+              style={{
+                ...chartCardStyle,
+                animation: 'fadeInUp 0.4s ease-out 0.3s both'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 2px 4px 0 rgba(0, 0, 0, 0.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.05)';
+              }}
+            >
               <h3 style={chartTitleStyle}>
                 <PauseCircle style={chartIconStyle} />
                 Wait Time per Question
@@ -442,9 +528,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
               <div style={chartContainerStyle}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={waitTimeData}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                    <XAxis dataKey="name" tick={{fill: '#64748b'}} axisLine={false} tickLine={false} />
-                    <YAxis tick={{fill: '#64748b'}} axisLine={false} tickLine={false} label={{ value: 'Seconds', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e5e5" />
+                    <XAxis dataKey="name" tick={{fill: '#404040'}} axisLine={false} tickLine={false} />
+                    <YAxis tick={{fill: '#404040'}} axisLine={false} tickLine={false} label={{ value: 'Seconds', angle: -90, position: 'insideLeft', fill: '#404040' }} />
                     <RechartsTooltip 
                       cursor={{fill: '#f1f5f9'}}
                       content={({ active, payload }) => {
@@ -506,8 +592,8 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
                 <tbody>
                   {data.qaPairs.map((pair, idx) => (
                     <tr key={idx}>
-                      <td style={{ ...tableCellStyle, color: '#64748b', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{pair.timestamp}</td>
-                      <td style={{ ...tableCellStyle, color: '#1e293b', fontWeight: 500, maxWidth: '20rem' }}>{pair.question}</td>
+                      <td style={{ ...tableCellStyle, color: '#404040', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{pair.timestamp}</td>
+                      <td style={{ ...tableCellStyle, color: '#0a0a0a', fontWeight: 500, maxWidth: '20rem' }}>{pair.question}</td>
                       <td style={tableCellStyle}>
                         <span style={badgeStyle}>
                           {pair.bloomTaxonomyLevel}
@@ -521,7 +607,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
                           {pair.waitTimeSeconds.toFixed(1)}s
                         </span>
                       </td>
-                      <td style={{ ...tableCellStyle, color: '#64748b', maxWidth: '20rem', fontStyle: 'italic' }}>"{pair.answer}"</td>
+                      <td style={{ ...tableCellStyle, color: '#404040', maxWidth: '20rem', fontStyle: 'italic' }}>"{pair.answer}"</td>
                     </tr>
                   ))}
                   {data.qaPairs.length === 0 && (
@@ -551,6 +637,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
                     <p style={{ fontSize: '0.875rem', fontWeight: 500, color: '#cbd5e1', margin: 0 }}>API Token Usage</p>
                     <p style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
                       {data.tokenUsage.totalTokens.toLocaleString()} <span style={{ fontSize: '0.875rem', fontWeight: 400, color: '#94a3b8' }}>total tokens</span>
+                    </p>
+                    <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#fbbf24', margin: '0.25rem 0 0 0' }}>
+                      Est. cost: ${estimatedCost.toFixed(4)} (Flash 2.0)
                     </p>
                   </div>
                 </div>
@@ -620,11 +709,41 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
                         </div>
                       </div>
                     </div>
+                    
+                    {/* Cost Estimate */}
+                    <div style={tokenDetailCardStyle}>
+                      <p style={tokenDetailLabelStyle}>Estimated Cost (Flash 2.0)</p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={tokenDetailRowStyle}>
+                          <span style={{ color: '#94a3b8' }}>Input Cost</span>
+                          <span style={{ color: '#34d399', fontFamily: 'monospace', fontWeight: 600 }}>
+                            ${((data.tokenUsage.promptTokens / 1_000_000) * 0.10).toFixed(4)}
+                          </span>
+                        </div>
+                        <div style={tokenDetailRowStyle}>
+                          <span style={{ color: '#94a3b8' }}>Output Cost</span>
+                          <span style={{ color: '#60a5fa', fontFamily: 'monospace', fontWeight: 600 }}>
+                            ${((data.tokenUsage.completionTokens / 1_000_000) * 0.40).toFixed(4)}
+                          </span>
+                        </div>
+                        <div style={{
+                          ...tokenDetailRowStyle,
+                          borderTop: '1px solid #334155',
+                          paddingTop: '0.5rem',
+                          marginTop: '0.25rem'
+                        }}>
+                          <span style={{ color: '#fbbf24', fontWeight: 600 }}>Total Cost</span>
+                          <span style={{ color: '#fbbf24', fontFamily: 'monospace', fontWeight: 700, fontSize: '1rem' }}>
+                            ${estimatedCost.toFixed(4)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   {/* Cost estimate note */}
-                  <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '1rem', textAlign: 'center', margin: '1rem 0 0 0' }}>
-                    Token counts are approximate. Video tokens are calculated based on Gemini's multimodal processing.
+                  <p style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '1rem', textAlign: 'center', margin: '1rem 0 0 0' }}>
+                    Cost estimates based on Gemini 2.0 Flash pricing ($0.10/1M input, $0.40/1M output). Token counts are approximate. Video tokens are calculated based on Gemini's multimodal processing.
                   </p>
                 </div>
               )}
