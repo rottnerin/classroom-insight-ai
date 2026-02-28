@@ -49,51 +49,24 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
 
   const uploadAreaStyle: React.CSSProperties = {
     position: 'relative',
-    padding: '3rem',
-    border: `2px dashed ${dragActive ? '#2563eb' : '#e5e5e5'}`,
-    borderRadius: '1rem',
-    transition: 'all 200ms ease-in-out',
-    textAlign: 'center',
-    cursor: 'pointer',
-    backgroundColor: dragActive ? '#ffffff' : '#fafafa',
-    transform: dragActive ? 'scale(1.01)' : 'scale(1)',
-    animation: dragActive ? 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' : 'none',
+    width: '100%',
+    maxWidth: '48rem',
+    margin: '0 auto',
   };
 
-  const iconContainerStyle: React.CSSProperties = {
-    padding: '1.25rem',
-    borderRadius: '50%',
-    backgroundColor: dragActive ? '#eff6ff' : '#ffffff',
-    color: dragActive ? '#2563eb' : '#404040',
-    display: 'inline-flex',
-    marginBottom: '1.5rem',
-    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
-    transition: 'all 200ms ease-in-out',
-  };
 
   return (
-    <div style={{ width: '100%', maxWidth: '42rem', margin: '0 auto', animation: 'fadeInUp 0.4s ease-out' }}>
+    <div style={uploadAreaStyle}>
       <div 
-        style={uploadAreaStyle}
+        style={{
+          position: 'relative',
+          width: '100%',
+        }}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
         onDrop={handleDrop}
         onClick={onButtonClick}
-        onMouseEnter={(e) => {
-          if (!dragActive) {
-            e.currentTarget.style.borderColor = '#2563eb';
-            e.currentTarget.style.backgroundColor = '#ffffff';
-            e.currentTarget.style.transform = 'scale(1.01)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (!dragActive) {
-            e.currentTarget.style.borderColor = '#e5e5e5';
-            e.currentTarget.style.backgroundColor = '#fafafa';
-            e.currentTarget.style.transform = 'scale(1)';
-          }
-        }}
       >
         <input 
           ref={inputRef}
@@ -103,34 +76,79 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
           onChange={handleChange}
         />
         
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-          <div style={iconContainerStyle}>
-            <UploadCloud size={48} />
+        {/* Large Input Field Style */}
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          backgroundColor: '#ffffff',
+          borderRadius: '1rem',
+          padding: '1.5rem 1.75rem',
+          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+          border: dragActive ? '2px solid #3b82f6' : '2px solid transparent',
+          transition: 'all 200ms ease-in-out',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
+        }}
+        onMouseEnter={(e) => {
+          if (!dragActive) {
+            e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+            e.currentTarget.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!dragActive) {
+            e.currentTarget.style.borderColor = 'transparent';
+            e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
+          }
+        }}
+        >
+          <UploadCloud size={24} color={dragActive ? '#3b82f6' : '#94a3b8'} />
+          <div style={{ flex: 1 }}>
+            <div style={{ 
+              fontSize: '1rem', 
+              color: dragActive ? '#3b82f6' : '#94a3b8',
+              fontWeight: 500
+            }}>
+              {dragActive ? 'Drop video file here' : 'Upload a classroom video or drag & drop'}
+            </div>
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: '#94a3b8',
+              marginTop: '0.25rem'
+            }}>
+              Supports MP4, MOV, and other video formats
+            </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '-0.03em', color: '#0a0a0a', margin: 0 }}>
-              Upload Lesson Recording
-            </h3>
-            <p style={{ fontSize: '1rem', color: '#404040', margin: 0 }}>
-              Drag & drop a video file here, or click to browse
-            </p>
-          </div>
-          
           <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            fontSize: '0.75rem',
-            color: '#d97706',
-            backgroundColor: '#fffbeb',
-            padding: '0.5rem 0.75rem',
-            borderRadius: '0.375rem',
-            border: '1px solid #fef3c7',
-            marginTop: '1rem',
+            fontSize: '0.875rem',
+            color: '#ffffff',
+            backgroundColor: '#3b82f6',
+            padding: '0.625rem 1.25rem',
+            borderRadius: '0.5rem',
+            fontWeight: 500,
+            whiteSpace: 'nowrap',
           }}>
-            <AlertCircle size={14} />
-            <span>Note: For this web demo, shorter clips (under 200MB) work best due to browser limits.</span>
+            Browse
           </div>
+        </div>
+
+        {/* Note */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          fontSize: '0.75rem',
+          color: 'rgba(255, 255, 255, 0.7)',
+          marginTop: '1rem',
+          justifyContent: 'center',
+        }}>
+          <AlertCircle size={14} />
+          <span>For best results, use videos under 200MB</span>
         </div>
       </div>
     </div>

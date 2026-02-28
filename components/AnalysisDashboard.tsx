@@ -47,6 +47,11 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ data }) => {
     margin: '0 auto',
     padding: '2rem 1rem',
     animation: 'fadeIn 0.4s ease-out',
+    backgroundColor: '#ffffff',
+    borderRadius: '1rem',
+    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.15)',
+    marginTop: '2rem',
+    marginBottom: '2rem',
   };
 
   const tabContainerStyle: React.CSSProperties = {

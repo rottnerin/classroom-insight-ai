@@ -150,15 +150,60 @@ const App: React.FC = () => {
                        state.status === AnalysisStatus.ANALYZING;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', color: '#0a0a0a', paddingBottom: '5rem' }}>
+    <div style={{ 
+      minHeight: '100vh', 
+      background: 'linear-gradient(to top, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)',
+      color: '#0a0a0a', 
+      paddingBottom: '5rem',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Cloud-like decorative shapes */}
+      <div style={{
+        position: 'absolute',
+        bottom: '10%',
+        left: '5%',
+        width: '200px',
+        height: '100px',
+        background: 'rgba(255, 255, 255, 0.15)',
+        borderRadius: '50px',
+        filter: 'blur(40px)',
+        opacity: 0.6,
+        zIndex: 0
+      }}></div>
+      <div style={{
+        position: 'absolute',
+        bottom: '15%',
+        right: '10%',
+        width: '250px',
+        height: '120px',
+        background: 'rgba(255, 255, 255, 0.12)',
+        borderRadius: '60px',
+        filter: 'blur(50px)',
+        opacity: 0.5,
+        zIndex: 0
+      }}></div>
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        left: '50%',
+        width: '180px',
+        height: '90px',
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: '45px',
+        filter: 'blur(35px)',
+        opacity: 0.4,
+        zIndex: 0
+      }}></div>
+
       {/* Header */}
       <header style={{
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        backgroundColor: '#ffffff',
-        borderBottom: '1px solid #e5e5e5',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
       }}>
         <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
@@ -166,47 +211,62 @@ const App: React.FC = () => {
               style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}
               onClick={reset}
             >
-              <div style={{ backgroundColor: '#2563eb', padding: '0.5rem', borderRadius: '0.5rem', color: '#ffffff' }}>
-                <Layout size={20} />
+              <div style={{ 
+                width: '32px', 
+                height: '32px', 
+                borderRadius: '50%', 
+                background: 'linear-gradient(135deg, #ec4899, #a855f7)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                fontSize: '18px',
+                fontWeight: 700
+              }}>
+                C
               </div>
               <h1 style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: 800, 
-                letterSpacing: '-0.03em',
-                background: 'linear-gradient(to right, #1d4ed8, #4338ca)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+                fontSize: '1.25rem', 
+                fontWeight: 700, 
+                letterSpacing: '-0.02em',
+                color: '#ffffff',
                 margin: 0
               }}>
                 Classroom Insight AI
               </h1>
             </div>
-            {state.status === AnalysisStatus.COMPLETE && (
-               <button 
-                onClick={reset}
-                style={{
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  color: '#404040',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  transition: 'color 200ms ease-in-out',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.color = '#2563eb'}
-                onMouseLeave={(e) => e.currentTarget.style.color = '#404040'}
-               >
-                 Analyze Another Video
-               </button>
-            )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+              {state.status === AnalysisStatus.COMPLETE && (
+                <button 
+                  onClick={reset}
+                  style={{
+                    fontSize: '0.875rem',
+                    fontWeight: 500,
+                    color: '#ffffff',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '0.5rem',
+                    cursor: 'pointer',
+                    padding: '0.5rem 1rem',
+                    transition: 'all 200ms ease-in-out',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                  }}
+                >
+                  Analyze Another Video
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main style={{ maxWidth: '80rem', margin: '0 auto', padding: '2.5rem 1rem' }}>
+      <main style={{ maxWidth: '80rem', margin: '0 auto', padding: '2.5rem 1rem', position: 'relative', zIndex: 1 }}>
         
         {state.status === AnalysisStatus.IDLE && (
           <div style={{
@@ -214,97 +274,121 @@ const App: React.FC = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            minHeight: '60vh',
-            gap: '2rem',
+            minHeight: '70vh',
+            gap: '3rem',
+            paddingTop: '4rem',
           }}>
             <div style={{ 
               textAlign: 'center', 
               display: 'flex', 
               flexDirection: 'column', 
               gap: '1.5rem', 
-              maxWidth: '42rem',
+              maxWidth: '48rem',
               animation: 'fadeInUp 0.4s ease-out'
             }}>
               <h2 style={{ 
-                fontSize: '2.5rem', 
-                fontWeight: 900, 
-                letterSpacing: '-0.05em', 
-                color: '#0a0a0a',
+                fontSize: '4rem', 
+                fontWeight: 400, 
+                letterSpacing: '-0.02em', 
+                color: '#ffffff',
                 lineHeight: '1.1',
-                margin: 0
+                margin: 0,
+                fontFamily: 'Georgia, serif'
               }}>
-                Analyze teaching dynamics <br/>
-                <span style={{ color: '#2563eb' }}>in seconds.</span>
+                Elevate your teaching.
               </h2>
-              <p style={{ fontSize: '1.125rem', color: '#404040', margin: 0 }}>
-                Upload a classroom video to automatically generate insights on Talk Time, Question Wait Time, and Bloom's Taxonomy distribution.
+              <p style={{ fontSize: '1.25rem', color: 'rgba(255, 255, 255, 0.9)', margin: 0, maxWidth: '36rem', marginLeft: 'auto', marginRight: 'auto' }}>
+                Classroom Insight AI is an intelligent analysis tool that brings video insights directly into your teaching practice.
               </p>
             </div>
             <FileUpload onFileSelect={handleFileSelect} />
             
+            {/* Feature Cards - Tilted Style */}
             <div style={{
-              display: 'flex',
-              flexDirection: 'row',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
               gap: '2rem',
               width: '100%',
-              maxWidth: '56rem',
-              marginTop: '4rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
+              maxWidth: '64rem',
+              marginTop: '6rem',
+              position: 'relative',
             }}>
+              {/* AI Transcription Card */}
               <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                textAlign: 'center', 
+                backgroundColor: '#ffffff',
+                borderRadius: '1rem',
                 padding: '1.5rem',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+                transform: 'rotate(-2deg)',
                 transition: 'transform 200ms ease-in-out',
-                animation: 'fadeInUp 0.4s ease-out 0.1s both'
+                animation: 'fadeInUp 0.4s ease-out 0.1s both',
+                position: 'relative',
+                zIndex: 1
               }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'rotate(-1deg) scale(1.02)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'rotate(-2deg) scale(1)'}
               >
-                <div style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '50%', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)', marginBottom: '1rem' }}>
-                  <Sparkles style={{ width: '1.5rem', height: '1.5rem', color: '#a855f7' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <div style={{ backgroundColor: '#f3e8ff', padding: '0.75rem', borderRadius: '0.5rem' }}>
+                    <Sparkles style={{ width: '1.5rem', height: '1.5rem', color: '#a855f7' }} />
+                  </div>
+                  <h3 style={{ fontWeight: 600, fontSize: '1rem', margin: 0, color: '#1e293b' }}>AI Transcription</h3>
                 </div>
-                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', margin: '0 0 0.5rem 0', color: '#0a0a0a' }}>AI Transcription</h3>
-                <p style={{ fontSize: '0.875rem', color: '#404040', margin: 0 }}>Detects every question and response.</p>
+                <p style={{ fontSize: '0.875rem', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+                  Automatically detects every question, response, and interaction with precise timestamps.
+                </p>
               </div>
+
+              {/* Multimodal Analysis Card */}
               <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                textAlign: 'center', 
+                backgroundColor: '#ffffff',
+                borderRadius: '1rem',
                 padding: '1.5rem',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+                transform: 'rotate(1.5deg)',
                 transition: 'transform 200ms ease-in-out',
-                animation: 'fadeInUp 0.4s ease-out 0.15s both'
+                animation: 'fadeInUp 0.4s ease-out 0.15s both',
+                position: 'relative',
+                zIndex: 1
               }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'rotate(0.5deg) scale(1.02)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'rotate(1.5deg) scale(1)'}
               >
-                <div style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '50%', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)', marginBottom: '1rem' }}>
-                  <PlaySquare style={{ width: '1.5rem', height: '1.5rem', color: '#3b82f6' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <div style={{ backgroundColor: '#dbeafe', padding: '0.75rem', borderRadius: '0.5rem' }}>
+                    <PlaySquare style={{ width: '1.5rem', height: '1.5rem', color: '#3b82f6' }} />
+                  </div>
+                  <h3 style={{ fontWeight: 600, fontSize: '1rem', margin: 0, color: '#1e293b' }}>Multimodal Analysis</h3>
                 </div>
-                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', margin: '0 0 0.5rem 0', color: '#0a0a0a' }}>Multimodal Analysis</h3>
-                <p style={{ fontSize: '0.875rem', color: '#404040', margin: 0 }}>Watches video & listens to audio simultaneously.</p>
+                <p style={{ fontSize: '0.875rem', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+                  Watches video and listens to audio simultaneously for comprehensive classroom insights.
+                </p>
               </div>
+
+              {/* Actionable Data Card */}
               <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                textAlign: 'center', 
+                backgroundColor: '#ffffff',
+                borderRadius: '1rem',
                 padding: '1.5rem',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+                transform: 'rotate(-1deg)',
                 transition: 'transform 200ms ease-in-out',
-                animation: 'fadeInUp 0.4s ease-out 0.2s both'
+                animation: 'fadeInUp 0.4s ease-out 0.2s both',
+                position: 'relative',
+                zIndex: 1
               }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'rotate(0deg) scale(1.02)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'rotate(-1deg) scale(1)'}
               >
-                <div style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '50%', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)', marginBottom: '1rem' }}>
-                  <Layout style={{ width: '1.5rem', height: '1.5rem', color: '#22c55e' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <div style={{ backgroundColor: '#dcfce7', padding: '0.75rem', borderRadius: '0.5rem' }}>
+                    <Layout style={{ width: '1.5rem', height: '1.5rem', color: '#22c55e' }} />
+                  </div>
+                  <h3 style={{ fontWeight: 600, fontSize: '1rem', margin: 0, color: '#1e293b' }}>Actionable Insights</h3>
                 </div>
-                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', margin: '0 0 0.5rem 0', color: '#0a0a0a' }}>Actionable Data</h3>
-                <p style={{ fontSize: '0.875rem', color: '#404040', margin: 0 }}>Visual charts for talk ratios and wait times.</p>
+                <p style={{ fontSize: '0.875rem', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+                  Visual charts and data for talk ratios, wait times, and Bloom's Taxonomy distribution.
+                </p>
               </div>
             </div>
           </div>
@@ -318,13 +402,14 @@ const App: React.FC = () => {
             justifyContent: 'center',
             minHeight: '60vh',
             gap: '1.5rem',
-            animation: 'fadeIn 0.4s ease-out'
+            animation: 'fadeIn 0.4s ease-out',
+            paddingTop: '4rem',
           }}>
             <div style={{ position: 'relative' }}>
               <div style={{
                 width: '6rem',
                 height: '6rem',
-                border: '4px solid #f1f5f9',
+                border: '4px solid rgba(255, 255, 255, 0.2)',
                 borderRadius: '50%',
               }}></div>
               <div style={{
@@ -333,7 +418,7 @@ const App: React.FC = () => {
                 left: 0,
                 width: '6rem',
                 height: '6rem',
-                border: `4px solid ${phaseDisplay.color}`,
+                border: `4px solid #ffffff`,
                 borderRadius: '50%',
                 borderTopColor: 'transparent',
                 animation: 'spin 1s linear infinite',
@@ -344,36 +429,36 @@ const App: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: phaseDisplay.color,
+                color: '#ffffff',
               }}>
                 {phaseDisplay.icon}
               </div>
             </div>
             <div style={{ textAlign: 'center', maxWidth: '28rem' }}>
-              <h3 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#0a0a0a', margin: '0 0 0.5rem 0' }}>
+              <h3 style={{ fontSize: '2rem', fontWeight: 400, letterSpacing: '-0.02em', color: '#ffffff', margin: '0 0 0.5rem 0', fontFamily: 'Georgia, serif' }}>
                 {phaseDisplay.title}
               </h3>
-              <p style={{ fontSize: '1rem', color: '#404040', margin: 0 }}>
+              <p style={{ fontSize: '1rem', color: 'rgba(255, 255, 255, 0.9)', margin: 0 }}>
                 {phaseDisplay.subtitle}
               </p>
               
-              {state.progress && (
+                  {state.progress && (
                 <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  <p style={{ fontSize: '0.875rem', fontWeight: 500, color: phaseDisplay.color, margin: 0 }}>
+                  <p style={{ fontSize: '0.875rem', fontWeight: 500, color: 'rgba(255, 255, 255, 0.9)', margin: 0 }}>
                     {state.progress.currentStep}
                   </p>
                   
                   {state.progress.phase === 'segmenting' && state.progress.percent !== undefined && (
                     <div style={{ width: '16rem', margin: '0 auto' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#404040', marginBottom: '0.25rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '0.25rem' }}>
                         <span>Progress</span>
                         <span>{state.progress.percent}%</span>
                       </div>
-                      <div style={{ height: '0.5rem', backgroundColor: '#e5e5e5', borderRadius: '9999px', overflow: 'hidden' }}>
+                      <div style={{ height: '0.5rem', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '9999px', overflow: 'hidden' }}>
                         <div 
                           style={{ 
                             height: '100%', 
-                            backgroundColor: phaseDisplay.color, 
+                            backgroundColor: '#ffffff', 
                             borderRadius: '9999px',
                             width: `${state.progress.percent}%`,
                             transition: 'width 0.3s',
@@ -385,15 +470,15 @@ const App: React.FC = () => {
                   
                   {state.progress.phase !== 'segmenting' && state.progress.totalSegments > 1 && (
                     <div style={{ width: '16rem', margin: '0 auto' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#404040', marginBottom: '0.25rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '0.25rem' }}>
                         <span>Segments</span>
                         <span>{state.progress.currentSegment} / {state.progress.totalSegments}</span>
                       </div>
-                      <div style={{ height: '0.5rem', backgroundColor: '#e5e5e5', borderRadius: '9999px', overflow: 'hidden' }}>
+                      <div style={{ height: '0.5rem', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '9999px', overflow: 'hidden' }}>
                         <div 
                           style={{ 
                             height: '100%', 
-                            backgroundColor: phaseDisplay.color, 
+                            backgroundColor: '#ffffff', 
                             borderRadius: '9999px',
                             width: `${(state.progress.currentSegment / state.progress.totalSegments) * 100}%`,
                             transition: 'width 0.5s',
@@ -417,29 +502,37 @@ const App: React.FC = () => {
             minHeight: '50vh',
             textAlign: 'center',
             gap: '1.5rem',
+            paddingTop: '4rem',
           }}>
-            <div style={{ backgroundColor: '#fef2f2', padding: '1.5rem', borderRadius: '50%' }}>
-              <AlertTriangle style={{ width: '3rem', height: '3rem', color: '#ef4444' }} />
+            <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', padding: '1.5rem', borderRadius: '50%', backdropFilter: 'blur(10px)' }}>
+              <AlertTriangle style={{ width: '3rem', height: '3rem', color: '#ffffff' }} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#0a0a0a', margin: '0 0 0.5rem 0' }}>Analysis Failed</h3>
-              <p style={{ fontSize: '1rem', color: '#404040', margin: 0, maxWidth: '28rem' }}>{state.error}</p>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 400, letterSpacing: '-0.02em', color: '#ffffff', margin: '0 0 0.5rem 0', fontFamily: 'Georgia, serif' }}>Analysis Failed</h3>
+              <p style={{ fontSize: '1rem', color: 'rgba(255, 255, 255, 0.9)', margin: 0, maxWidth: '28rem' }}>{state.error}</p>
             </div>
             <button 
               onClick={reset}
               style={{
-                padding: '0.5rem 1.5rem',
-                backgroundColor: '#0a0a0a',
-                color: '#ffffff',
+                padding: '0.75rem 1.5rem',
+                backgroundColor: '#ffffff',
+                color: '#3b82f6',
                 borderRadius: '0.5rem',
                 border: 'none',
                 cursor: 'pointer',
                 fontSize: '0.875rem',
-                fontWeight: 500,
-                transition: 'background-color 200ms ease-in-out',
+                fontWeight: 600,
+                transition: 'all 200ms ease-in-out',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0a0a0a'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+              }}
             >
               Try Again
             </button>
